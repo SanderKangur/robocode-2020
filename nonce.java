@@ -10,6 +10,25 @@ import java.awt.geom.*;
 //Wall Avoidance
 
 public class nonce extends AdvancedRobot{
+	char[] english = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+			'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+			'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+			',', '.', '?', ' '};
+
+	String[] morse = { ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..",
+			".---", "-.-", ".-..", "--", "-.", "---", ".---.", "--.-", ".-.",
+			"...", "-", "..-", "...-", ".--", "-..-", "-.--", "--..", ".----",
+			"..---", "...--", "....-", ".....", "-....", "--...", "---..", "----.",
+			"-----", "--..--", ".-.-.-", "..--..", "#"};
+
+	String text = "i graduated top of my class in the navy seals, and ive been involved in numerous secret raids on al quaeda, and i have over 300 confirmed kills. i am trained in gorilla warfare and im the top sniper in the entire us armed forces. you are nothing to me but just another target. ";
+
+	Integer pos = 0;
+
+	Integer todo = 0;
+
+	boolean init = false;
+
 private byte moveDirection = 1;
 static double prevEnergy = 100.0; 
 private int wallMargin = 60; 
@@ -17,14 +36,26 @@ private int tooCloseToWall = 0;
 
 	public void run() {
 	
-		setColors(Color.black, Color.black, Color.yellow, Color.orange, Color.white);
+		setColors(Color.black, Color.black, Color.black, Color.black, Color.black);
 		setAdjustRadarForGunTurn(true);
 		setAdjustGunForRobotTurn(true);
+
+		char[] chars = text.toCharArray();
+		String str = "";
+
+		for (int i = 0; i < chars.length; i++){
+			for (int j = 0; j < english.length; j++){
+
+				if (english[j] == chars[i]){
+					str = str + morse[j] + " ";
+				}
+			}
+		}
 	
 		addCustomEvent(new Condition("pusku") {
 			public boolean test() {
 				return (
-					 //Ã¼leval
+					 //üleval
 					 (getY() >= getBattleFieldHeight() - wallMargin ||
 					 //parem
 					 getX() >= getBattleFieldWidth() - wallMargin ||
@@ -38,6 +69,49 @@ private int tooCloseToWall = 0;
 			});
 	
 		do {
+			if (init){
+				init = false;
+				if (str.charAt(pos) == '.') {
+					setColors(Color.white, Color.white, Color.white, Color.white, Color.white);
+					todo = 10;
+				}
+				else if (str.charAt(pos) == '-') {
+					setColors(Color.white, Color.white, Color.white, Color.white, Color.white);
+					todo = 30;
+				}
+			}
+
+			else if (todo == 0){
+				setColors(Color.black, Color.black, Color.black, Color.black, Color.black);
+				todo = -11;
+			}
+			else if (todo > 0) {
+				todo--;
+			}
+
+			else if (todo == -1){
+				pos++;
+				if (pos == str.length()){
+					pos = 0;
+				}
+				if (str.charAt(pos) == '.') {
+					setColors(Color.white, Color.white, Color.white, Color.white, Color.white);
+					todo = 10;
+				}
+				else if (str.charAt(pos) == '-') {
+					setColors(Color.white, Color.white, Color.white, Color.white, Color.white);
+					todo = 30;
+				}
+				else if (str.charAt(pos) == ' ')
+					todo = 10;
+				else if (str.charAt(pos) == '#')
+					todo = 41;
+			}
+
+			else {
+				todo++;
+			}
+
 		    if ( getRadarTurnRemaining() == 0.0) setTurnRadarRightRadians(Double.POSITIVE_INFINITY );
 			seina();
 		    execute();
