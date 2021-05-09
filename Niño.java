@@ -9,7 +9,7 @@ import java.awt.geom.*;
 //Stop and Go
 //Wall Avoidance
 
-public class nonce extends AdvancedRobot{
+public class Niño extends AdvancedRobot{
 	char[] english = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
 			'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
 			'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
@@ -21,7 +21,7 @@ public class nonce extends AdvancedRobot{
 			"..---", "...--", "....-", ".....", "-....", "--...", "---..", "----.",
 			"-----", "--..--", ".-.-.-", "..--..", "#"};
 
-	String text = "i graduated top of my class in the navy seals, and ive been involved in numerous secret raids on al quaeda, and i have over 300 confirmed kills. i am trained in gorilla warfare and im the top sniper in the entire us armed forces. you are nothing to me but just another target. ";
+	String text = "i pull up, les go";
 
 	Integer pos = 0;
 
@@ -55,7 +55,7 @@ private int tooCloseToWall = 0;
 		addCustomEvent(new Condition("pusku") {
 			public boolean test() {
 				return (
-					 //�leval
+					 //üleval
 					 (getY() >= getBattleFieldHeight() - wallMargin ||
 					 //parem
 					 getX() >= getBattleFieldWidth() - wallMargin ||
